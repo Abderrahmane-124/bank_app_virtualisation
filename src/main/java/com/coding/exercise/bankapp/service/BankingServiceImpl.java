@@ -66,14 +66,23 @@ public class BankingServiceImpl implements BankingService {
      * @param customerDetails
      * @return
      */
-	public ResponseEntity<Object> addCustomer(CustomerDetails customerDetails) {
-		
-		Customer customer = bankingServiceHelper.convertToCustomerEntity(customerDetails);
-		customer.setCreateDateTime(new Date());
-		customerRepository.save(customer);
-		
-		return ResponseEntity.status(HttpStatus.CREATED).body("New Customer created successfully.");
-	}
+    public ResponseEntity<Object> addCustomer(CustomerDetails customerDetails) {
+        
+        Customer customer = bankingServiceHelper.convertToCustomerEntity(customerDetails);
+        
+        // Ensure customer has a customer number
+        if (customer.getCustomerNumber() == null) {
+            // Generate a random 6-digit customer number
+            long randomNum = 100000 + (long) (Math.random() * 900000);
+            customer.setCustomerNumber(randomNum);
+        }
+        
+        customer.setCreateDateTime(new Date());
+        customer.setStatus("ACTIVE");
+        customerRepository.save(customer);
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body("New Customer created successfully.");
+    }
 
 	/**
 	 * READ Customer

@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping("customers")
+@RequestMapping("bank-api/customers")
 @Api(tags = { "Customer REST endpoints" })
 public class CustomerController {
 
@@ -45,7 +45,6 @@ public class CustomerController {
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success"),
 			@ApiResponse(code = 400, message = "Bad Request"),
 			@ApiResponse(code = 500, message = "Internal Server Error") })
-
 	public ResponseEntity<Object> addCustomer(@RequestBody CustomerDetails customer) {
 
 		return bankingService.addCustomer(customer);

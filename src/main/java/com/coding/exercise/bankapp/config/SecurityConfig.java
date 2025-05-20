@@ -1,26 +1,33 @@
 package com.coding.exercise.bankapp.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 /**
- * 
- * Spring security denied access to h2-console.
- * This configuration will resolve 403 forbidden error when accessing h2-console.
- * 
- * @author sbathina
- *
+ * Spring security configuration
+ * This configuration allows all requests to all endpoints
  */
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeRequests().antMatchers("/").permitAll().and()
-                .authorizeRequests().antMatchers("/h2-console/**").permitAll();
+        // Allow all requests without authentication
+        httpSecurity
+            .authorizeRequests()
+                .antMatchers("/**").permitAll()
+            .and()
+            .formLogin().disable()
+            .httpBasic().disable();
 
+        // Disable CSRF protection
         httpSecurity.csrf().disable();
+        
+        // Allow frames for H2 console
         httpSecurity.headers().frameOptions().disable();
     }
 }

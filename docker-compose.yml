@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  bank-app:
+    build: .
+    ports:
+      - "8989:8989"
+    volumes:
+      - ./h2data:/data/h2
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
