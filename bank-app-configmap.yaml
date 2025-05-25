@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bank-app-config
+data:
+  SPRING_PROFILES_ACTIVE: "docker"
+  # Ajoutez d'autres variables d'environnement ici 

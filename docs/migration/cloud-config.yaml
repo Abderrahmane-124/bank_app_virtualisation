@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-config
+  namespace: bank-app
+data:
+  # Configuration Cloud Provider
+  cloud-provider: "aws"  # aws, gcp, azure
+  region: "eu-west-1"
+  environment: "production"
+  
+  # Configuration Cluster
+  cluster-name: "bank-app-cluster"
+  node-type: "t3.medium"
+  min-nodes: "1"
+  max-nodes: "4"
+  
+  # Configuration Stockage
+  storage-class: "gp2"
+  storage-size: "20Gi"
+  
+  # Configuration Base de données
+  db-type: "rds"  # rds, cloud-sql, azure-db
+  db-instance: "db.t3.small"
+  db-storage: "20Gi"
+  
+  # Configuration Monitoring
+  monitoring-enabled: "true"
+  logging-enabled: "true"
+  alerting-enabled: "true"
+  
+  # Configuration Sécurité
+  vpc-cidr: "10.0.0.0/16"
+  subnet-cidr: "10.0.1.0/24"
+  security-group: "bank-app-sg" 

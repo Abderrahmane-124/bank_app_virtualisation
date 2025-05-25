@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: bank-app-network-policy
+  namespace: bank-app
+spec:
+  podSelector:
+    matchLabels:
+      app: bank-app
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: security
+    ports:
+    - protocol: TCP
+      port: 8989
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: security
+    ports:
+    - protocol: TCP
+      port: 8989 
